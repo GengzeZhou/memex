@@ -143,63 +143,49 @@ Your project summaries, schedule, and configuration sync through git — just pu
 
 ### Level 2: Raw chat history (via SSH)
 
-Your actual `.claude/` session files live on each machine. To pull them into memex, you need SSH access between machines. [Tailscale](https://tailscale.com/) is the easiest way to connect machines that aren't on the same network.
+Your actual `.claude/` session files live on each machine. To pull them into memex, all you need is SSH access.
 
 #### Setup
 
-**1. Install Tailscale on all machines**
+**1. Verify SSH access to your remote machines**
 
 ```bash
-# macOS
-brew install tailscale
-
-# Ubuntu/Debian
-curl -fsSL https://tailscale.com/install.sh | sh
-
-# Then authenticate on each machine
-sudo tailscale up
+# Test that you can reach the machine and see Claude's history
+ssh you@your-server "ls ~/.claude/history.jsonl"
 ```
 
-After setup, each machine gets a hostname like `work-desktop.tailnet-abc123.ts.net`. Run `tailscale status` to see all connected machines.
-
-**2. Enable SSH between machines**
-
-```bash
-# Verify you can reach a remote machine
-tailscale ping work-desktop
-
-# Test SSH (Tailscale provides SSH out of the box, or use your own keys)
-ssh your-username@work-desktop.tailnet-abc123.ts.net "ls ~/.claude/history.jsonl"
-```
-
-If you see the file path, SSH works. If not, set up SSH keys:
+If you see the file, you're ready. If not, set up SSH keys:
 
 ```bash
 # Generate a key (if you don't have one)
 ssh-keygen -t ed25519
 
 # Copy it to the remote machine
-ssh-copy-id your-username@work-desktop.tailnet-abc123.ts.net
+ssh-copy-id you@your-server
 ```
 
-**3. Configure machines in memex**
+> **Tip**: If your machines aren't on the same network, [Tailscale](https://tailscale.com/) is a simple way to connect them. But any SSH access works — VPN, port forwarding, jump hosts, etc.
+
+**2. Configure machines in memex**
 
 Edit `config.yaml`:
 
 ```yaml
 machines:
   - name: work-desktop
-    host: work-desktop.tailnet-abc123.ts.net
+    host: work-desktop.example.com
     user: your-username
     claude_dir: ~/.claude
 
   - name: gpu-server
-    host: gpu-server.tailnet-abc123.ts.net
+    host: 10.0.1.50
     user: your-username
     claude_dir: ~/.claude
 ```
 
-**4. Sync**
+The `host` can be a hostname, IP address, or anything SSH can resolve.
+
+**3. Sync**
 
 ```bash
 # From within memex, run:
@@ -229,7 +215,7 @@ Only `.jsonl` session files and `sessions-index.json` are pulled. Config, memory
 cd ~/memex
 git pull                        # Get latest curated knowledge
 ./scripts/collect.sh            # Collect local history
-./scripts/sync.sh               # Pull remote history (if Tailscale connected)
+./scripts/sync.sh               # Pull remote history (if SSH configured)
 claude                          # Open Claude Code
 /project:collect                # Claude processes new sessions
 # ... work ...
