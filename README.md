@@ -129,6 +129,26 @@ The most important file is **`CLAUDE.md`**. It defines Claude's identity in this
 
 The more Claude knows about you, the better it serves you. And because memex is a git repo, that knowledge travels everywhere you do.
 
+## Citation
+
+If you use Memex in your work or find it useful, please cite:
+
+```bibtex
+@software{zhou2026memex,
+  author       = {Gengze Zhou},
+  title        = {Memex: A Portable Identity for Claude Code},
+  year         = {2026},
+  url          = {https://github.com/GengzeZhou/memex},
+  license      = {MIT}
+}
+```
+
+## Author
+
+**Gengze Zhou** — [GitHub](https://github.com/GengzeZhou) | [Website](https://gengzezhou.github.io)
+
+Built with [Claude Code](https://claude.ai/claude-code) by Anthropic.
+
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
