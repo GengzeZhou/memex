@@ -12,4 +12,4 @@ Description of the project.
 
 -->
 
-No sessions processed yet. Run `/project:collect` to get started.
+No sessions processed yet. Run `/collect` to get started.

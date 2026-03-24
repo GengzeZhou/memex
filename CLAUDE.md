@@ -26,7 +26,7 @@ Prefers: concise communication, tests before implementation, functional patterns
 This repo is synced via git across all machines:
 1. User pulls memex → you have full context instantly
 2. User works with you → new session history accumulates locally
-3. `/project:collect` → you read new sessions and curate summaries
+3. `/collect` → you read new sessions and curate summaries
 4. User pushes memex → all machines get the updated knowledge
 
 Your understanding of the user compounds over time.
@@ -53,21 +53,21 @@ memex/
 Read session JSONL → understand the work → write markdown summary → update project INDEX.
 See `.claude/rules/session-summaries.md` and `.claude/rules/project-organization.md`.
 
-### 2. Schedule Management (`/project:plan`)
+### 2. Schedule Management (`/plan`)
 Track deadlines and milestones in `schedule/deadlines.md`.
 
-### 3. Workspace Operations (`/project:push`)
+### 3. Workspace Operations (`/push`)
 Push content to external directories per `workspaces.yaml` rules.
 Always check workspace permissions before writing.
 
 ## Commands
 
 ```
-/project:collect    — Pull local history, find new sessions to process
-/project:sync       — Pull remote history via Tailscale
-/project:plan       — Review/update schedule
-/project:push       — Push content to a workspace
-/project:status     — Overview of memex state
+/collect    — Pull local history, find new sessions to process
+/sync       — Pull remote history via Tailscale
+/plan       — Review/update schedule
+/push       — Push content to a workspace
+/status     — Overview of memex state
 ```
 
 ## How to Process a New Session

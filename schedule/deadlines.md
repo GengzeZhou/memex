@@ -16,4 +16,4 @@
 
 ## This Week's Priorities
 
-- [ ] *Run `/project:plan` to populate*
+- [ ] *Run `/plan` to populate*

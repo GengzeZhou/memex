@@ -56,7 +56,7 @@ This gives you your own private copy. Your chat history, project summaries, and 
 claude
 
 # Process your sessions
-/project:collect
+/collect
 ```
 
 ### 3. Push & Sync Across Machines
@@ -113,11 +113,11 @@ memex/
 
 | Command | What it does |
 |---------|-------------|
-| `/project:collect` | Pull local history, find and process new sessions |
-| `/project:sync` | Pull remote history via Tailscale, process new sessions |
-| `/project:plan` | Review/update schedule and deadlines |
-| `/project:push` | Push content to external workspaces |
-| `/project:status` | Overview of memex state |
+| `/collect` | Pull local history, find and process new sessions |
+| `/sync` | Pull remote history via Tailscale, process new sessions |
+| `/plan` | Review/update schedule and deadlines |
+| `/push` | Push content to external workspaces |
+| `/status` | Overview of memex state |
 
 ## Workspaces
 
@@ -191,7 +191,7 @@ The `host` can be a hostname, IP address, or anything SSH can resolve.
 
 ```bash
 # From within memex, run:
-/project:sync
+/sync
 
 # Or manually:
 ./scripts/sync.sh
@@ -219,7 +219,7 @@ git pull                        # Get latest curated knowledge
 ./scripts/collect.sh            # Collect local history
 ./scripts/sync.sh               # Pull remote history (if SSH configured)
 claude                          # Open Claude Code
-/project:collect                # Claude processes new sessions
+/collect                # Claude processes new sessions
 # ... work ...
 git add -A && git commit -m "sync" && git push
 ```
