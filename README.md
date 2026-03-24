@@ -1,6 +1,8 @@
 # Memex
 
 > A portable identity for Claude Code. Clone it anywhere, and Claude knows you.
+>
+> Named after Vannevar Bush's [memex](https://en.wikipedia.org/wiki/Memex) (1945) — a hypothetical device that stores and links all of a person's intellectual trails.
 
 Every Claude Code session starts cold. You re-explain your project, your conventions, your context. CLAUDE.md helps, but it's static and you maintain it by hand. Your real context — what you've been working on, what decisions you've made, what problems you've solved — lives scattered across conversation histories that Claude never sees again.
 
