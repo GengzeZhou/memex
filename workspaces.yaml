@@ -1,0 +1,30 @@
+# Memex Workspaces
+# External directories that memex can read from and write to.
+# Each workspace has a role, a path, and rules for what memex does with it.
+
+workspaces: []
+
+  # Example: a research workspace where memex can push task updates and ideas
+  #
+  # - name: Research
+  #   path: ~/projects/research
+  #   role: research-hub
+  #   description: Central research workspace with papers, ideas, and task tracking.
+  #   operations:
+  #     - read: "**/*"
+  #     - write: tasks/, ideas/
+  #
+  # Example: an active project (read-only — memex summarizes but doesn't modify)
+  #
+  # - name: my-app
+  #   path: ~/projects/my-app
+  #   role: active-project
+  #   description: Main application codebase.
+  #   operations:
+  #     - read: "**/*"
+  #     - write: none
+
+# Workspace Roles:
+#   research-hub:      Memex can push digests, update deadlines, add ideas
+#   active-project:    Memex reads and summarizes, but does not modify
+#   external-project:  Same as active-project, for non-primary work

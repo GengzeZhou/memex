@@ -1,0 +1,22 @@
+# Memex Configuration
+# Add your remote machines here. Each entry needs:
+#   - name: a short identifier (used as folder name under history/remote/)
+#   - host: Tailscale hostname or IP
+#   - user: SSH username on that machine
+#   - claude_dir: path to .claude directory (default: ~/.claude)
+
+machines: []
+  # Example:
+  # - name: work-desktop
+  #   host: work-desktop.tailnet-name.ts.net
+  #   user: jsmith
+  #   claude_dir: ~/.claude
+  #
+  # - name: gpu-server
+  #   host: gpu-server.tailnet-name.ts.net
+  #   user: jsmith
+  #   claude_dir: ~/.claude
+
+# Local settings
+local:
+  claude_dir: ~/.claude
