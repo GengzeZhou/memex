@@ -31,11 +31,21 @@ The git repo is the identity. GitHub is the sync layer. Claude is the curator.
 
 ## Quick Start
 
+### 1. Fork & Clone
+
+Fork this repo on GitHub, then clone your fork:
+
 ```bash
-# Clone to any machine
+# Clone YOUR fork (not the original)
 git clone https://github.com/YOUR_USERNAME/memex.git ~/memex
 cd ~/memex
+```
 
+This gives you your own private copy. Your chat history, project summaries, and schedule stay in your repo — not ours.
+
+### 2. Set Up Your Identity
+
+```bash
 # Edit CLAUDE.md — tell Claude who you are
 # Collect your local chat history
 ./scripts/collect.sh
@@ -45,10 +55,19 @@ claude
 
 # Process your sessions
 /project:collect
-
-# Push the knowledge back
-git add -A && git commit -m "sync from this machine" && git push
 ```
+
+### 3. Push & Sync Across Machines
+
+```bash
+# Push your knowledge to your fork
+git add -A && git commit -m "sync from this machine" && git push
+
+# On another machine: pull and Claude knows you there too
+git pull
+```
+
+> **Tip**: Make your fork private. It will contain your full conversation histories.
 
 ## What's Inside
 
