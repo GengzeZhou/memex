@@ -135,9 +135,106 @@ Claude pushes relevant summaries, deadlines, and ideas to these directories — 
 
 ## Multi-Machine Sync
 
-**Primary method: git.** Push memex to a private GitHub repo. Pull on every machine. This syncs the curated knowledge (projects, schedule, workspaces config).
+Memex syncs across machines at two levels:
 
-**For raw history:** If you also want to sync the raw `.claude/` session files between machines that can't git-push, use [Tailscale](https://tailscale.com/) + the built-in `sync.sh` script. Add machines to `config.yaml` and run `/project:sync`.
+### Level 1: Curated knowledge (via git)
+
+Your project summaries, schedule, and configuration sync through git — just push and pull your fork. This works on any machine with GitHub access.
+
+### Level 2: Raw chat history (via SSH)
+
+Your actual `.claude/` session files live on each machine. To pull them into memex, you need SSH access between machines. [Tailscale](https://tailscale.com/) is the easiest way to connect machines that aren't on the same network.
+
+#### Setup
+
+**1. Install Tailscale on all machines**
+
+```bash
+# macOS
+brew install tailscale
+
+# Ubuntu/Debian
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# Then authenticate on each machine
+sudo tailscale up
+```
+
+After setup, each machine gets a hostname like `work-desktop.tailnet-abc123.ts.net`. Run `tailscale status` to see all connected machines.
+
+**2. Enable SSH between machines**
+
+```bash
+# Verify you can reach a remote machine
+tailscale ping work-desktop
+
+# Test SSH (Tailscale provides SSH out of the box, or use your own keys)
+ssh your-username@work-desktop.tailnet-abc123.ts.net "ls ~/.claude/history.jsonl"
+```
+
+If you see the file path, SSH works. If not, set up SSH keys:
+
+```bash
+# Generate a key (if you don't have one)
+ssh-keygen -t ed25519
+
+# Copy it to the remote machine
+ssh-copy-id your-username@work-desktop.tailnet-abc123.ts.net
+```
+
+**3. Configure machines in memex**
+
+Edit `config.yaml`:
+
+```yaml
+machines:
+  - name: work-desktop
+    host: work-desktop.tailnet-abc123.ts.net
+    user: your-username
+    claude_dir: ~/.claude
+
+  - name: gpu-server
+    host: gpu-server.tailnet-abc123.ts.net
+    user: your-username
+    claude_dir: ~/.claude
+```
+
+**4. Sync**
+
+```bash
+# From within memex, run:
+/project:sync
+
+# Or manually:
+./scripts/sync.sh
+```
+
+This runs `rsync` over SSH to pull `history.jsonl` and all session `.jsonl` files from each machine into `history/remote/<machine-name>/`. It only reads from remote machines — never writes to them.
+
+#### What gets synced
+
+```
+Remote machine ~/.claude/
+├── history.jsonl              ──► history/remote/work-desktop/history.jsonl
+└── projects/
+    └── <encoded-path>/
+        └── <session-id>.jsonl ──► history/remote/work-desktop/projects/...
+```
+
+Only `.jsonl` session files and `sessions-index.json` are pulled. Config, memory, and other `.claude/` data stays on the remote machine.
+
+#### The full daily workflow
+
+```bash
+cd ~/memex
+git pull                        # Get latest curated knowledge
+./scripts/collect.sh            # Collect local history
+./scripts/sync.sh               # Pull remote history (if Tailscale connected)
+claude                          # Open Claude Code
+/project:collect                # Claude processes new sessions
+# ... work ...
+git add -A && git commit -m "sync" && git push
+```
 
 ## Customization
 
