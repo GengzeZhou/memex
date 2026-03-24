@@ -162,12 +162,6 @@ If you use Memex in your work or find it useful, please cite:
 }
 ```
 
-## Author
-
-**Gengze Zhou** — [GitHub](https://github.com/GengzeZhou) | [Website](https://gengzezhou.github.io)
-
-Built with [Claude Code](https://claude.ai/claude-code) by Anthropic.
-
 ## License
 
 MIT — see [LICENSE](LICENSE) for details.
